@@ -1,9 +1,13 @@
 import requests
 import os
+import streamlit as st
 
 # Por defecto se conecta a localhost (útil para desarrollo).
-# En Render, puedes setear una variable de entorno API_URL apuntando a tu URL en la nube.
-API_URL = os.getenv("API_URL", "http://localhost:8000")
+# En Streamlit Cloud, leerá automáticamente desde los "Secrets".
+try:
+    API_URL = st.secrets["API_URL"]
+except Exception:
+    API_URL = os.getenv("API_URL", "http://localhost:8000")
 
 def check_health():
     try:
