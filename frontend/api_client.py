@@ -2,12 +2,12 @@ import requests
 import os
 import streamlit as st
 
-# Por defecto se conecta a localhost (útil para desarrollo).
-# En Streamlit Cloud, leerá automáticamente desde los "Secrets".
+# Por defecto se conecta a la URL de Render, que es pública.
+# Si configuramos un secreto o variable de entorno, lo usará en su lugar.
 try:
-    API_URL = st.secrets["API_URL"]
+    API_URL = st.secrets.get("API_URL", os.getenv("API_URL", "https://polibyte.onrender.com"))
 except Exception:
-    API_URL = os.getenv("API_URL", "http://localhost:8000")
+    API_URL = "https://polibyte.onrender.com"
 
 def check_health():
     try:
